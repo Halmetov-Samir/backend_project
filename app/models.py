@@ -33,6 +33,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(255), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(255), nullable=False)
     role = db.Column(db.Enum(Role), nullable=False, default=Role.USER)
+    is_active = db.Column(db.Boolean,nullable=False,default=True)
 
     def set_password(self, password: str) -> None:
         self.password_hash = bcrypt.generate_password_hash(password).decode()
@@ -50,6 +51,7 @@ class User(UserMixin, db.Model):
             "last_name": self.last_name,
             "email": self.email,
             "role": self.role.value,
+            "is_active":self.is_active
         }
 
 
@@ -60,6 +62,7 @@ class Product(db.Model):
     name = db.Column(db.String(100), nullable=False)
     price = db.Column(Numeric(10, 2), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
+    is_active = db.Column(db.Boolean, nullable=False, default=True)
 
     def to_dict(self) -> dict:
         return {
@@ -67,4 +70,5 @@ class Product(db.Model):
             "name": self.name,
             "price": float(self.price),
             "quantity": self.quantity,
+            "is_active":self.is_active
         }
