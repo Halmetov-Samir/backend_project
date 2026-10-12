@@ -128,6 +128,12 @@ def delete_user():
     return jsonify({"message": "Аккаунт удалён"}), 200
 
 
+@users_bp.get("/profile")
+@login_required
+def get_profile():
+    return jsonify(current_user.to_dict()), 200
+
+
 @users_bp.put("/<int:user_id>/role")
 @require_permission("roles.manage")
 def change_role(user_id: int):

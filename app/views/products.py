@@ -48,7 +48,7 @@ def list_product():
 @require_permission("products.read")
 def get_product(product_id:int):
     product = db.session.get(Product,product_id)
-    if not product or product.is_active:
+    if not product or not product.is_active:
         return jsonify({'error':"Товар не найден"}),404
     return jsonify(product.to_dict()),200
 
@@ -97,6 +97,6 @@ def delete_product(product_id:int):
         return jsonify({"error": "Не удалось удалить товар"}), 500
 
     return jsonify({
-        "message":"Товар удален",
+        "message":"Товар удалён",
     }), 200
 
